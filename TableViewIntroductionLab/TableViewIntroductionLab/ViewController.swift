@@ -12,30 +12,51 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var taskView: UITableView!
     private var tasks = Task.allTasks
-//        didSet {
-//            taskView.reloadData()
-//        }
-//    }
+    private var task1 = [[Task]]() {
+    didSet {
+            taskView.reloadData()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         taskView.dataSource = self
+//        taskView.delegate = self
+        loadData()
+        
+        dump(Task.makeSections())
     }
-
-
+    
+    func loadData() {
+        task1 = Task.makeSections()
+       }
 }
 
-extension ViewController: UITableViewDataSource {
+extension ViewController: UITableViewDataSource,UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tasks.count
+        return 3
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "taskCell", for: indexPath)
         let task = tasks[indexPath.row]
         cell.textLabel?.text = task.name
-        cell.detailTextLabel?.text = task.dueDate.description
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en")
+        dateFormatter.dateFormat = "EEEE, MMM d, yyyy h:mm a zzzz"
+        let dateAsString = dateFormatter.string(from: task.dueDate)
+        cell.detailTextLabel?.text = dateAsString
         return cell
 }
+    
+   
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return task1.count
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return 
+    }
 }
