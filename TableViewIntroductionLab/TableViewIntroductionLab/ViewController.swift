@@ -12,7 +12,7 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var taskView: UITableView!
     private var tasks = Task.allTasks
-    private var task1 = [[Task]]() {
+    private var task1:[[Task]] = [] {
     didSet {
             taskView.reloadData()
         }
@@ -21,9 +21,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         taskView.dataSource = self
-//        taskView.delegate = self
         loadData()
-        
         dump(Task.makeSections())
     }
     
@@ -32,10 +30,10 @@ class ViewController: UIViewController {
        }
 }
 
-extension ViewController: UITableViewDataSource,UITableViewDelegate {
+extension ViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return task1[section].count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -50,13 +48,22 @@ extension ViewController: UITableViewDataSource,UITableViewDelegate {
         return cell
 }
     
-   
-    
     func numberOfSections(in tableView: UITableView) -> Int {
         return task1.count
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return 
+        switch section {
+        case 0:
+            return "notCompleted"
+        case 1:
+            return "inProgress"
+        case 2:
+            return "completed"
+        default:
+            return "Unknown Section"
+        }
+
     }
-}
+    }
+

@@ -67,16 +67,16 @@ struct Task {
     static func makeSections () -> [[Task]] {
     var sectionsArr = Array(repeating: [Task](), count: Status.allCases.count)
     
-        for thing in allTasks {
-            sectionsArr[thing.status.rawValue].append(thing)
-//            switch thing.status {
-//            case .notStarted:
-//                sectionsArr[0].append(thing)
-//            case .inProgress:
-//                sectionsArr[1].append(thing)
-//            case .completed:
-//                sectionsArr[2].append(thing)
-//            }
+        for task in allTasks {
+//            sectionsArr[thing.status.rawValue].append(thing)
+            switch task.status {
+            case .notStarted:
+                sectionsArr[0].append(task)
+            case .inProgress:
+                sectionsArr[1].append(task)
+            case .completed:
+                sectionsArr[2].append(task)
+            }
         }
     return sectionsArr
     }
