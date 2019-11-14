@@ -11,12 +11,14 @@ import UIKit
 class ViewController: UIViewController {
     
     @IBOutlet weak var taskView: UITableView!
-//    private var tasks = Task.allTasks
-    private var task1:[[Task]] = [] {
-    didSet {
+    private var tasks = Task.allTasks
+    private var task1 = [[Task]]() {
+        didSet {
             taskView.reloadData()
         }
     }
+    
+    private var sortAscending = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,7 +29,27 @@ class ViewController: UIViewController {
     
     func loadData() {
         task1 = Task.makeSections()
-       }
+    }
+    
+    
+    @IBAction func sort(_ sender: UIBarButtonItem) {
+        sortAscending.toggle()
+        sortData(sortAscending)
+    }
+    
+    func sortData(_ sortAscending: Bool) {
+        if sortAscending {
+            for (index, thing) in task1.enumerated() {
+                task1[index] = task1[index].sorted {$0.dueDate < $1.dueDate}
+                navigationItem.rightBarButtonItem?.title = "Sort Descending"
+            }
+        }  else {
+            for (index, thing) in task1.enumerated() {
+                task1[index] = task1[index].sorted {$0.dueDate > $1.dueDate}
+                navigationItem.rightBarButtonItem?.title = "Sort Ascending"
+            }
+        }
+    }
 }
 
 extension ViewController: UITableViewDataSource {
@@ -46,7 +68,7 @@ extension ViewController: UITableViewDataSource {
         let dateAsString = dateFormatter.string(from: task.dueDate)
         cell.detailTextLabel?.text = dateAsString
         return cell
-}
+    }
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return task1.count
@@ -63,6 +85,6 @@ extension ViewController: UITableViewDataSource {
         default:
             return "N/A"
         }
-       }
     }
+}
 
