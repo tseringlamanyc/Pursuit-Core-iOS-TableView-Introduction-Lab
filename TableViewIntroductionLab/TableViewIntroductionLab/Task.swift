@@ -1,7 +1,7 @@
 import Foundation
 
 struct Task {
-    enum Status: Int, CaseIterable {
+    enum Status: String, CaseIterable {
         case notStarted
         case inProgress
         case completed
@@ -66,7 +66,7 @@ struct Task {
     
     static func makeSections () -> [[Task]] {
     var sectionsArr = Array(repeating: [Task](), count: Status.allCases.count)
-    
+
         for task in allTasks {
 //            sectionsArr[thing.status.rawValue].append(thing)
             switch task.status {
@@ -80,5 +80,7 @@ struct Task {
         }
     return sectionsArr
     }
-
+    
 }
+
+

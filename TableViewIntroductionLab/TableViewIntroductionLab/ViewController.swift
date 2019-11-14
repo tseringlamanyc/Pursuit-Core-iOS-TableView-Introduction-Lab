@@ -11,7 +11,7 @@ import UIKit
 class ViewController: UIViewController {
     
     @IBOutlet weak var taskView: UITableView!
-    private var tasks = Task.allTasks
+//    private var tasks = Task.allTasks
     private var task1:[[Task]] = [] {
     didSet {
             taskView.reloadData()
@@ -38,7 +38,7 @@ extension ViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "taskCell", for: indexPath)
-        let task = tasks[indexPath.row]
+        let task = task1[indexPath.section][indexPath.row]
         cell.textLabel?.text = task.name
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "en")
@@ -61,9 +61,8 @@ extension ViewController: UITableViewDataSource {
         case 2:
             return "completed"
         default:
-            return "Unknown Section"
+            return "N/A"
         }
-
-    }
+       }
     }
 
