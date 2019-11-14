@@ -24,7 +24,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         taskView.dataSource = self
         loadData()
-        dump(Task.makeSections())
+        sortData(true)
     }
     
     func loadData() {
